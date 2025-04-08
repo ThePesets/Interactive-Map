@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробная информация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'images/Сталинградская_битва.jpg' %}') no-repeat center center fixed;
+            background-size: cover;
+            color: #495057;
+            line-height: 1.6;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(73, 80, 87, 0.9);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+            color: #E8EDE1;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+        .header .close {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            color: #E8EDE1;
+            padding: 5px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .header .close:hover {
+            color: #997E59;
+        }
+        .header .close span {
+            margin-left: 10px;
+            font-size: 16px;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        .header .close:hover span {
+            color: #997E59;
+        }
+        .content {
+            max-width: 90%;
+            margin: 250px auto 20px;
+            padding: 20px;
+            background-color: rgba(232, 237, 225, 0.9);
+            border: 4px solid #997E59;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #E8EDE1;
+            padding: 10px 100px;
+            border-radius: 8px;
+            z-index: 1;
+        }
+        .title h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+        h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #E8EDE1;
+            background-color: #997E59;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #76543E;
+        }
+        @media (max-width: 768px) {
+            .content {
+                margin: 80px 10px 20px;
+                padding: 15px;
+            }
+            h3 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="close" onclick="window.history.back();">
+            &times;<span>Подробнее</span>
+        </button>
+    </div>
+    <div class="title">
+        <h1>Сталинградская битва</h1>
+    </div>
+    <div class="content">
+        <h3>Причины:</h3>
+        <p>Сталинградская битва стала одним из решающих сражений Второй мировой войны.
+            Германия стремилась захватить Сталинград, важный промышленный центр на Волге, чтобы подорвать экономику СССР и получить контроль над путями снабжения.
+            Для Советского Союза удержание города было вопросом не только стратегического значения, но и национального духа.
+            План операции «Блау», разработанный немецким командованием, предполагал захват Кавказа, а Сталинград являлся ключевой точкой на пути к этой цели.</p>
+        <h3>Ход событий:</h3>
+        <p>Сражение началось в июле 1942 года с массированных немецких атак.
+            Бои за город носили ожесточённый характер: каждая улица и каждый дом становились полем боя.
+            Советские войска под командованием генерала Василия Чуйкова героически обороняли Сталинград, несмотря на тяжёлые потери.</p>
+        <p>К августу 1942 года немецкие войска заняли часть города, включая ключевые районы на западном берегу Волги.
+            Однако Красная армия продолжала сопротивление, используя тактику ближнего боя, что сводило на нет преимущество немцев в авиации и артиллерии.
+            Бои за Мамаев курган и заводы «Красный Октябрь» и «Баррикады» стали символом героизма защитников.
+            В течение осени линии фронта часто менялись, но немцам не удавалось полностью уничтожить советские силы.
+            Сталинград был практически разрушен, но советские солдаты продолжали удерживать свои позиции.</p>
+        <p>В ноябре 1942 года советское командование перешло в контрнаступление.
+            Операция «Уран» предусматривала удары по флангам немецкой армии, которые были защищены слабыми румынскими и итальянскими частями.
+            В результате стремительных действий Красной армии немецкие войска были окружены. 
+            Около 300 тысяч солдат Вермахта оказались в «котле», отрезанными от снабжения.
+            Попытки Германии деблокировать окружённую группировку провалились, и к концу января 1943 года сопротивление немцев ослабло.
+            2 февраля 1943 года остатки армии Паулюса капитулировали.</p>
+        <h3>Последствия:</h3>
+        <p>Победа в Сталинградской битве стала переломным моментом войны.
+            Германия потеряла стратегическую инициативу на Восточном фронте, а Красная армия начала наступление, которое привело к освобождению оккупированных территорий.
+            Сталинградская битва стала символом стойкости и героизма советского народа. 
+            Потери с обеих сторон были огромными: около 2 миллионов человек.
+            Город, практически полностью разрушенный, был восстановлен в послевоенные годы и получил звание города-героя.
+            Это сражение также оказало влияние на союзников СССР, укрепив их уверенность в успехе антигитлеровской коалиции.</p>
+        <a href="#" class="back-button" onclick="window.history.back();">↞ Вернуться к карте</a>
+    </div>
+</body>
+</html>

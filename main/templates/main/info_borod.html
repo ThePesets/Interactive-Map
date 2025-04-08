@@ -1,0 +1,413 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробная информация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'images/<Бородинская_битва>.jpg' %}') no-repeat center center fixed;
+            background-size: cover;
+            color: #495057;
+            line-height: 1.6;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(73, 80, 87, 0.9);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+            color: #E8EDE1;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+        .header .close {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            color: #E8EDE1;
+            padding: 5px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .header .close:hover {
+            color: #997E59;
+        }
+        .header .close span {
+            margin-left: 10px;
+            font-size: 16px;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        .header .close:hover span {
+            color: #997E59;
+        }
+        .content {
+            max-width: 90%;
+            margin: 250px auto 20px;
+            padding: 20px;
+            background-color: rgba(232, 237, 225, 0.9);
+            border: 4px solid #997E59;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #E8EDE1;
+            padding: 10px 100px;
+            border-radius: 8px;
+            z-index: 1;
+        }
+        .title h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+        h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #E8EDE1;
+            background-color: #997E59;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #76543E;
+        }
+        .test-button {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: auto;
+            padding: 10px 20px;
+            color: #E8EDE1;
+            background-color: #997E59;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+        .test-button:hover {
+            background-color: #76543E;
+        }
+        .test-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(232, 237, 225, 0.9);
+            border: 4px solid #997E59;
+            border-radius: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .answers {
+            margin-bottom: 20px;
+        }
+        .answers input {
+            margin-right: 10px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .gallery {
+            position: relative;
+            max-width: 100%;
+            margin: 20px auto;
+            overflow: hidden;
+            text-align: center;
+        }
+        .gallery-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .gallery-item {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .gallery-image {
+            height: 400px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .gallery-caption {
+            text-align: center;
+            font-size: 16px;
+            color: #495057;
+            margin-top: 10px;
+        }
+        .gallery-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        .gallery-arrow {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .gallery-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        @media (max-width: 768px) {
+            .content {
+                margin: 80px 10px 20px;
+                padding: 15px;
+            }
+            h3 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 16px;
+            }
+            .gallery-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="close" onclick="window.history.back();">
+            &times;<span>Подробнее</span>
+        </button>
+    </div>
+    <div class="title">
+        <h1>Бородинская битва</h1>
+    </div>
+    <div class="content">
+        <h3>Причины:</h3>
+        <p>Бородинская битва стала ключевым событием Отечественной войны 1812 года между Российской империей и армией Наполеона.
+            Причинами сражения стали стремление Наполеона к господству в Европе и его вторжение в Россию, начавшееся летом 1812 года.
+            Французская армия, добившись ряда успехов и продвинувшись вглубь России, намеревалась нанести решающий удар, чтобы заставить русскую армию капитулировать.
+            Русские войска под командованием Михаила Кутузова стремились остановить продвижение французов и сохранить боеспособность армии.</p>
+        <h3>Ход событий:</h3>
+        <p>Сражение развернулось 7 сентября 1812 года недалеко от деревни Бородино, в 125 километрах к западу от Москвы.
+            Русская армия, насчитывающая около 120 тысяч солдат, заняла оборонительные позиции.
+            Наполеон, командуя армией из 130 тысяч человек, решил атаковать русские укрепления в центре и на флангах.</p>
+        <p>Сражение началось ранним утром с мощной артиллерийской подготовки французов.
+            Наполеон сосредоточил свои силы на Багратионовых флешах — ключевых оборонительных укреплениях на левом фланге русской армии.
+            Французские войска атаковали волнами, и кровопролитные бои за флеши продолжались несколько часов.
+            Русская армия под руководством генералов Багратиона и Раевского отважно оборонялась, но флеши были захвачены после упорного сопротивления.</p>
+        <p>В центре русских позиций находилась батарея Раевского, которая стала объектом ожесточённых атак французской пехоты и кавалерии.
+            Каждый штурм сопровождался огромными потерями с обеих сторон.
+            Генерал Раевский лично вёл своих солдат в контратаки, что поднимало боевой дух армии.
+            Наполеон, наблюдая за ходом битвы, отказался вводить в бой свою гвардию, опасаясь больших потерь.</p>
+        <p>На правом фланге русская кавалерия под командованием генерала Уварова провела успешный манёвр, отвлекая часть французских сил и облегчая давление на центральные позиции.
+            К вечеру сражение достигло апогея, но ни одна из сторон не смогла добиться решающего успеха.
+            Русская армия сохранила свои основные силы и отступила в ночь на 8 сентября, оставив поле боя за французами.</p> 
+        <h3>Последствия:</h3>
+        <p>Бородинская битва стала самой кровопролитной в войне: обе стороны потеряли около 70 тысяч человек.
+            Французы формально одержали победу, но русская армия сохранила боеспособность и продолжила отступление, применяя тактику выжженной земли.
+            Наполеон захватил Москву, но его армия столкнулась с нехваткой продовольствия и затяжной партизанской войной.
+            Бородинская битва продемонстрировала героизм русских солдат и стала символом национального сопротивления.
+            Впоследствии она вдохновила множество произведений искусства, включая поэмы Михаила Лермонтова и оперу Петра Чайковского.</p>
+        <div class="gallery">
+            <div class="gallery-images" id="gallery-images">
+                <div class="gallery-item">
+                    <img src="{% static 'images/Константин_Павлович.jpg' %}" alt="Image 4" class="gallery-image">
+                    <div class="gallery-caption">Портрет Великого князя Константина Павловича</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/карта_восстания.jfif' %}" alt="Image 1" class="gallery-image">
+                    <div class="gallery-caption">Карта восстания на Сенатской площади</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/декабристы.jpg' %}" alt="Image 2" class="gallery-image">
+                    <div class="gallery-caption">Казнённые участники восстания</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/Николай_1.jpg' %}" alt="Image 3" class="gallery-image">
+                    <div class="gallery-caption">Портрет императора Николая 1</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/Константин_Павлович.jpg' %}" alt="Image 4" class="gallery-image">
+                    <div class="gallery-caption">Портрет Великого князя Константина Павловича</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/карта_восстания.jfif' %}" alt="Image 1" class="gallery-image">
+                    <div class="gallery-caption">Карта восстания на Сенатской площади</div>
+                </div>
+            </div>
+            <div class="gallery-controls">
+                <button class="gallery-arrow" onclick="prevImage()">&#10094;</button>
+                <button class="gallery-arrow" onclick="nextImage()">&#10095;</button>
+            </div>
+        </div>
+        <script>
+            let currentIndex = 1; // Начало галереи
+            const images = document.getElementById('gallery-images');
+            const totalImages = images.children.length;
+    
+            images.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+            function updateGallery() {
+                images.style.transition = 'transform 0.5s ease-in-out';
+                images.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+                // Перелистывание галереи
+                setTimeout(() => {
+                    if (currentIndex === 0) {
+                        currentIndex = totalImages - 2;
+                        images.style.transition = 'none';
+                        images.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    } else if (currentIndex === totalImages - 1) {
+                        currentIndex = 1;
+                        images.style.transition = 'none';
+                        images.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    }
+                }, 500);
+            }
+    
+            function nextImage() {
+                currentIndex++;
+                updateGallery();
+            }
+    
+            function prevImage() {
+                currentIndex--;
+                updateGallery();
+            }
+        </script>
+        <div style="display: flex; justify-content: space-between;">
+            <a href="#" class="back-button" onclick="window.history.back();">↞ Вернуться к карте</a>
+            <button class="test-button" onclick="startTest()">Пройти тест</button>
+        </div>
+        <div class="test-container" id="test-container">
+            <div id="question-container">
+            </div>
+            <div class="action-buttons">
+                <button class="test-button" id="next-button" onclick="nextQuestion()">Следующий вопрос</button>
+                <button class="test-button" id="finish-button" onclick="finishTest()" style="display: none;">Завершить тест</button>
+            </div>
+        </div> 
+    </div>
+    <div id="result" style="display: none;"></div>
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+
+        // Вопросы
+        const questions = [
+            {
+                text: "Кто возглавлял Северное общество декабристов?",
+                answers: ["Александр I", "Никита Муравьёв", "Сергей Муравьёв-Апостол", "Николай I", "Павел Пестель"],
+                correct: 1
+            },
+            {
+                text: "Когда произошло восстание декабристов?",
+                answers: ["14.12.1812г.", "19.11.1825г.", "18.02.1955г.", "14.12.1825г.", "26.08.1812г."],
+                correct: 3
+            },
+            {
+                text: "Выберите вариант, где перечислены имена только казнённых декабристов:",
+                answers: ["С. Муравьёв-Апостол, С. Трубецкой", "П. Пестель, Н. Муравьёв", "С. Муравьёв-Апостол, К. Рылеев", "К. Рылеев, И. Пущин", "П. Каховский, А. Бенкендорф"],
+                correct: 2
+            }
+        ];
+  
+        function startTest() {
+            document.getElementById("test-container").style.display = "block";
+            showQuestion();
+        }
+  
+        function showQuestion() {
+            const questionContainer = document.getElementById("question-container");
+            const question = questions[currentQuestionIndex];
+    
+            questionContainer.innerHTML = `
+                <div class="question">${question.text}</div>
+                <div class="answers">
+                    ${question.answers.map((answer, index) => `
+                        <label>
+                            <input type="radio" name="answer" value="${index}">
+                            ${answer}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+    
+            document.getElementById("next-button").style.display = currentQuestionIndex < questions.length - 1 ? "inline-block" : "none";
+            document.getElementById("finish-button").style.display = currentQuestionIndex === questions.length - 1 ? "inline-block" : "none";
+        }
+    
+        function nextQuestion() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Выберите ответ перед переходом к следующему вопросу!");
+                return;
+            }
+            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
+                correctAnswers++;
+            }
+            currentQuestionIndex++;
+            showQuestion();
+        }
+    
+        function finishTest() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Выберите ответ перед завершением теста!");
+                return;
+            }
+            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
+                correctAnswers++;
+            }
+            
+            const questionContainer = document.getElementById("question-container");
+            questionContainer.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 10px;">
+                    <h3 style="text-align: center; font-size: 28px; margin-bottom: 5px;">Ваш результат:</h3>
+                    <p style="font-size: 32px; font-weight: bold; color: #415c6b; margin: 0;">${correctAnswers} из ${questions.length}</p>
+                </div>
+            `;
+          
+            document.getElementById("next-button").style.display = "none";
+            document.getElementById("finish-button").style.display = "none";
+        }        
+    </script>
+</body>
+</html>

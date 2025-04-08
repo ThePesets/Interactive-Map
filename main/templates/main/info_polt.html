@@ -1,0 +1,419 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробная информация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'images/Полтавская_битва.jpg' %}') no-repeat center center fixed;
+            background-size: cover;
+            color: #495057;
+            line-height: 1.6;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(73, 80, 87, 0.9);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+            color: #E8EDE1;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+        .header .close {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            color: #E8EDE1;
+            padding: 5px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .header .close:hover {
+            color: #997E59;
+        }
+        .header .close span {
+            margin-left: 10px;
+            font-size: 16px;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        .header .close:hover span {
+            color: #997E59;
+        }
+        .content {
+            max-width: 90%;
+            margin: 250px auto 20px;
+            padding: 20px;
+            background-color: rgba(232, 237, 225, 0.9);
+            border: 4px solid #997E59;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #E8EDE1;
+            padding: 10px 100px;
+            border-radius: 8px;
+            z-index: 1;
+        }
+        .title h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+        h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #E8EDE1;
+            background-color: #997E59;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #76543E;
+        }
+        .test-button {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: auto;
+            padding: 10px 20px;
+            color: #E8EDE1;
+            background-color: #997E59;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+        .test-button:hover {
+            background-color: #76543E;
+        }
+        .test-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(232, 237, 225, 0.9);
+            border: 4px solid #997E59;
+            border-radius: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .answers {
+            margin-bottom: 20px;
+        }
+        .answers input {
+            margin-right: 10px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .gallery {
+            position: relative;
+            max-width: 100%;
+            margin: 20px auto;
+            overflow: hidden;
+            text-align: center;
+        }
+        .gallery-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .gallery-item {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .gallery-image {
+            height: 400px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .gallery-caption {
+            text-align: center;
+            font-size: 16px;
+            color: #495057;
+            margin-top: 10px;
+        }
+        .gallery-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        .gallery-arrow {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .gallery-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        @media (max-width: 768px) {
+            .content {
+                margin: 80px 10px 20px;
+                padding: 15px;
+            }
+            h3 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 16px;
+            }
+            .gallery-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="close" onclick="window.history.back();">
+            &times;<span>Подробнее</span>
+        </button>
+    </div>
+    <div class="title">
+        <h1>Полтавская битва</h1>
+    </div>
+    <div class="content">
+        <h3>Причины:</h3>
+        <p>Полтавское сражение стало ключевым эпизодом Великой Северной войны (1700–1721), 
+            в которой Россия, возглавляемая Петром I, 
+            стремилась закрепиться на Балтийском море и утвердить своё место среди европейских держав. 
+            Противостояние между Россией и Швецией, которая на тот момент была ведущей 
+            военной державой в регионе, достигло апогея к началу XVIII века.</p>
+        <p>Шведский король Карл XII, одержавший ранее ряд побед, стремился уничтожить 
+            российские силы и заставить Петра I капитулировать. 
+            В 1708 году Карл вторгся в Россию, рассчитывая на поддержку местного населения и присоединение войск изменника Ивана Мазепы, 
+            гетмана Запорожского казачества. Однако шведская армия столкнулась с серьёзными трудностями: 
+            русские войска применяли тактику «выжженной земли», 
+            уничтожая запасы продовольствия, а суровая зима 1708–1709 годов ослабила боеспособность шведов.</p>
+        <p>К лету 1709 года Карл XII осадил Полтаву, надеясь захватить стратегически важный город на пути к Москве. 
+            Пётр I, желая сорвать планы шведов, собрал армию и готовился к решающему сражению.</p>
+        <h3>Ход событий:</h3>
+        <p>Ранним утром 27 июня 1709 года русские и шведские войска встретились на поле близ Полтавы. 
+            Шведская армия, численностью около 24 тысяч человек, была ослаблена голодом, болезнями и моральным упадком. 
+            Русская армия, насчитывающая около 42 тысяч человек, была хорошо снабжена и поддерживалась артиллерией.</p>
+        <p>Сражение началось с атаки шведов на русские редуты — укрепления, построенные Петром I. 
+            Эти редуты сыграли ключевую роль: они задержали шведское наступление и нанесли врагу серьёзные потери. 
+            Когда шведы наконец прорвались к главным позициям русской армии, их силы уже значительно сократились.</p>
+        <p>Карл XII, раненный накануне в ногу, не мог лично руководить войском и командование перешло к фельдмаршалу Карлу Густаву Реншильду. 
+            Однако отсутствие чёткого плана действий и плохая координация среди шведских частей привели к хаосу. 
+            Русские войска под командованием Бориса Шереметева, Александра Меншикова и самого Петра I начали контратаку, используя численное превосходство и эффективную артиллерию.</p>
+        <p>Ближе к полудню шведская армия была окружена. 
+            Попытки организовать сопротивление провалились, и остатки войск начали отступать. 
+            Карл XII и Иван Мазепа бежали в Османскую империю, а большая часть шведской армии была уничтожена или захвачена в плен.</p>
+        <h3>Последствия:</h3>
+        <p>Полтавская битва завершилась решительной победой России и стала поворотным моментом Великой Северной войны. 
+            Шведская армия утратила статус непобедимой, а её поражение означало конец шведской гегемонии в Европе. 
+            Россия, напротив, укрепила свои позиции, что позволило Петру I продолжить реформы и создать сильное централизованное государство.</p>
+        <p>Шведская сторона потеряла около 9 тысяч убитыми и около 18 тысяч пленными, включая командующего Реншильда. 
+            Потери России были значительно меньше — около 5 тысяч человек. 
+            Победа под Полтавой не только обеспечила стратегическое преимущество, но и подняла моральный дух русской армии.</p>
+        <p>Полтавское сражение также имело символическое значение: оно показало, что Россия может противостоять сильнейшим державам Европы. 
+            В дальнейшем это сражение стало источником национальной гордости и нашло отражение в литературе и искусстве, включая знаменитую поэму А.С. Пушкина «Полтава».</p>
+        <div class="gallery">
+            <div class="gallery-images" id="gallery-images">
+                <div class="gallery-item">
+                    <img src="{% static 'images/Карл_12.jpg' %}" alt="Image 4" class="gallery-image">
+                    <div class="gallery-caption">Портрет шведского короля Карла XII</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/карта_полтавы.jpg' %}" alt="Image 1" class="gallery-image">
+                    <div class="gallery-caption">Карта Полтавского сражения</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/Пётр_1.jpg' %}" alt="Image 2" class="gallery-image">
+                    <div class="gallery-caption">Портрет императора Петра I</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/Карл_12.jpg' %}" alt="Image 4" class="gallery-image">
+                    <div class="gallery-caption">Портрет шведского короля Карла XII</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="{% static 'images/карта_полтавы.jpg' %}" alt="Image 1" class="gallery-image">
+                    <div class="gallery-caption">Карта Полтавского сражения</div>
+                </div>
+            </div>
+            <div class="gallery-controls">
+                <button class="gallery-arrow" onclick="prevImage()">&#10094;</button>
+                <button class="gallery-arrow" onclick="nextImage()">&#10095;</button>
+            </div>
+        </div>
+        <script>
+            let currentIndex = 1; // Начало галереи
+            const images = document.getElementById('gallery-images');
+            const totalImages = images.children.length;
+
+            images.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            function updateGallery() {
+                images.style.transition = 'transform 0.5s ease-in-out';
+                images.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                // Перелистывание галереи
+                setTimeout(() => {
+                    if (currentIndex === 0) {
+                        currentIndex = totalImages - 2;
+                        images.style.transition = 'none';
+                        images.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    } else if (currentIndex === totalImages - 1) {
+                        currentIndex = 1;
+                        images.style.transition = 'none';
+                        images.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    }
+                }, 500);
+            }
+
+            function nextImage() {
+                currentIndex++;
+                updateGallery();
+            }
+
+            function prevImage() {
+                currentIndex--;
+                updateGallery();
+            }
+        </script>
+        <div style="display: flex; justify-content: space-between;">
+            <a href="#" class="back-button" onclick="window.history.back();">↞ Вернуться к карте</a>
+            <button class="test-button" onclick="startTest()">Пройти тест</button>
+        </div>
+        <div class="test-container" id="test-container">
+            <div id="question-container">
+            </div>
+            <div class="action-buttons">
+                <button class="test-button" id="next-button" onclick="nextQuestion()">Следующий вопрос</button>
+                <button class="test-button" id="finish-button" onclick="finishTest()" style="display: none;">Завершить тест</button>
+            </div>
+        </div> 
+    </div>
+    <div id="result" style="display: none;"></div>
+    <script>
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+
+        // Вопросы
+        const questions = [
+            {
+                text: "Вопрос 1",
+                answers: ["Ответ 1", "Ответ 2", "Ответ 3", "Ответ 4", "Ответ 5"],
+                correct: 1
+            },
+            {
+                text: "Вопрос 2",
+                answers: ["Ответ 1", "Ответ 2", "Ответ 3", "Ответ 4", "Ответ 5"],
+                correct: 3
+            },
+            {
+                text: "Вопрос 3",
+                answers: ["Ответ 1", "Ответ 2", "Ответ 3", "Ответ 4", "Ответ 5"],
+                correct: 2
+            }
+        ];
+
+        function startTest() {
+            document.getElementById("test-container").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const questionContainer = document.getElementById("question-container");
+            const question = questions[currentQuestionIndex];
+
+            questionContainer.innerHTML = `
+                <div class="question">${question.text}</div>
+                <div class="answers">
+                    ${question.answers.map((answer, index) => `
+                        <label>
+                            <input type="radio" name="answer" value="${index}">
+                            ${answer}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById("next-button").style.display = currentQuestionIndex < questions.length - 1 ? "inline-block" : "none";
+            document.getElementById("finish-button").style.display = currentQuestionIndex === questions.length - 1 ? "inline-block" : "none";
+        }
+
+        function nextQuestion() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Выберите ответ перед переходом к следующему вопросу!");
+                return;
+            }
+            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
+                correctAnswers++;
+            }
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        function finishTest() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Выберите ответ перед завершением теста!");
+                return;
+            }
+            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
+                correctAnswers++;
+            }
+        
+            const questionContainer = document.getElementById("question-container");
+            questionContainer.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 10px;">
+                    <h3 style="text-align: center; font-size: 28px; margin-bottom: 5px;">Ваш результат:</h3>
+                    <p style="font-size: 32px; font-weight: bold; color: #415c6b; margin: 0;">${correctAnswers} из ${questions.length}</p>
+                </div>
+            `;
+        
+            document.getElementById("next-button").style.display = "none";
+            document.getElementById("finish-button").style.display = "none";
+        }        
+    </script>
+</body>
+</html>

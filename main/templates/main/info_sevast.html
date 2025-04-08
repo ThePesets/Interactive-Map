@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробная информация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'images/Оборона_Севастополя.jpg' %}') no-repeat center center fixed;
+            background-size: cover;
+            color: #495057;
+            line-height: 1.6;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(73, 80, 87, 0.9);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+            color: #E8EDE1;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+        .header .close {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            color: #E8EDE1;
+            padding: 5px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .header .close:hover {
+            color: #997E59;
+        }
+        .header .close span {
+            margin-left: 10px;
+            font-size: 16px;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        .header .close:hover span {
+            color: #997E59;
+        }
+        .content {
+            max-width: 90%;
+            margin: 250px auto 20px;
+            padding: 20px;
+            background-color: rgba(232, 237, 225, 0.9);
+            border: 4px solid #997E59;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #E8EDE1;
+            padding: 10px 100px;
+            border-radius: 8px;
+            z-index: 1;
+        }
+        .title h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+        h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #E8EDE1;
+            background-color: #997E59;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #76543E;
+        }
+        @media (max-width: 768px) {
+            .content {
+                margin: 80px 10px 20px;
+                padding: 15px;
+            }
+            h3 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="close" onclick="window.history.back();">
+            &times;<span>Подробнее</span>
+        </button>
+    </div>
+    <div class="title">
+        <h1>Оборона Севастополя</h1>
+    </div>
+    <div class="content">
+        <h3>Причины:</h3>
+        <p>Оборона Севастополя происходила в рамках Крымской войны (1853–1856), в которой участвовали Российская империя, Великобритания, Франция, а также Османская империя. 
+            Севастополь был ключевым военным портом Черноморского флота России, и его захват союзниками стал бы серьёзным ударом по российскому военно-морскому потенциалу.</p>
+        <h3>Ход событий:</h3>
+        <p>Сражения за Севастополь начались в сентябре 1854 года, когда союзные войска высадились в Крыму. 
+            Севастополь был осаждён на протяжении 11 месяцев. 
+            Оборона города была организована русскими силами под командованием адмирала Павла Нахимова, генерала Михаила Грекова и других. 
+            Несмотря на упорное сопротивление, город подвергся интенсивным обстрелам, и силы противников превосходили русские войска по численности и вооружению. 
+            В сентябре 1855 года, после долгой осады и разрушения города, российские войска покинули Севастополь.</p>
+        <h3>Последствия:</h3>
+        <p>Оборона Севастополя была героическим и трагическим событием. 
+            Хотя город был эвакуирован, его сопротивление стало символом мужества и патриотизма. 
+            Крымская война закончилась в 1856 году, и её последствия ослабили позиции России в Европе, несмотря на стратегическое значение обороны Севастополя. 
+            Россия была вынуждена уступить части своих территорий в Черном море, а также подписать Парижский мирный договор, который ограничивал её военное присутствие в этом регионе.</p>
+        <a href="#" class="back-button" onclick="window.history.back();">↞ Вернуться к карте</a>
+    </div>
+</body>
+</html>
